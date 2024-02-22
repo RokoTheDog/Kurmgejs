@@ -1,6 +1,8 @@
-from flask import Flask
-import json
+from flask import Flask, render_template, request
 import requests
+import csv
+from tabulate import tabulate
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -15,7 +17,17 @@ def favourites():
 @app.route("/about")
 def aboutus():
     return render_template("about.html")
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
-resp = requests.get("https://data.gov.lv/dati/dataset/cb6831cb-1d89-44a3-b889-b43c411df4fe/resource/7f68f6fc-a0f9-4c31-b43c-770e97a06fda/download/vakances-2024-02-15.csv")
-#a = resp.json()
-#print(resp)
+
+
+file = requests.get("https://data.gov.lv/dati/lv/api/3/action/datastore_search?resource_id=7f68f6fc-a0f9-4c31-b43c-770e97a06fda&limit=5000")
+file = file.json()
+records=file['result']['records']
+headers=['Vakances nosaukums','Alga no','Alga līdz']
+data=[]
+for rec in records:
+    data.append(rec['Vakances nosaukums'],rec['Alga no'],rec['Alga līdz'])
+print(tabulate(data,headers,tablefmt='grid'))
