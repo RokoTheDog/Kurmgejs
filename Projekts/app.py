@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import helpers
 
 app = Flask(__name__)
 
@@ -14,3 +15,8 @@ def favourites():
 @app.route("/about")
 def aboutus():
     return render_template("about.html")
+@app.route("/data", methods=['GET'])
+def data():
+    filter = request.args.get('filtertext', default="")
+    table = helpers.get_data_gov_lv(filter)
+    return render_template("data.html", table=table)

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Dati no API{% endblock %}
+
+{% block body %}
+
+        <h2>Dinamiski iegūti dati no API</h2>
+
+        <form action="/data">
+                <input type="text" name="filtertext">
+                <input type="submit" value="Filtrēt">
+        </form>
+        <!-- tabula1 -->
+        {{ table | safe }}
+        <!-- tabula2 -->
+
+        <a href="/">Uz galveno lapu</a>
+
+{% endblock %}
