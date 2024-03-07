@@ -1,20 +1,20 @@
 import sqlite3
 import requests
-import csv
 
 def get_data_gov_lv(filter):
     url = "https://data.gov.lv/dati/dataset/cb6831cb-1d89-44a3-b889-b43c411df4fe/resource/7f68f6fc-a0f9-4c31-b43c-770e97a06fda/download/"
-    response = requests.get(url)
-    response.encoding = 'utf-8'
-    lines = response.text.splitlines()
-    rows = csv.DictReader( lines )
-    print(rows)
-    return ""
-    table = "<table><tr><th>ID</th><th>Kods</th><th>Nosaukums</th><th>Adrese</th></tr>"
-    for row in rows:
+    url = url.json()
+    records = url["result"]["records"]
+    table = "<table><tr><th>ID</th><th>Vakances Nosaukums</th><th>Alga no</th><th>Alga līdz</th><th>Pieteikšanās Termiņš</th><th>Vieta</th><th>Vairāk Informācijas</th></tr>"
+    for row in records:
         table += "<tr>"
-        for i in range(len(row)):
-            table += "<td>"+str(row[i])+"</td>"
+        table += "<td>"+row["_id"]+"</td>"
+        table += "<td>"+row["Vakances nosaukums"]+"</td>"
+        table += "<td>"+row["Alga no"]+"</td>"
+        table += "<td>"+row["Alga līdz"]+"</td>"
+        table += "<td>"+row["Pieteikšanās termiņš"]+"</td>"
+        table += "<td>"+row["Vieta"]+"</td>"
+        table += "<td>"+row["Vakances paplašināts apraksts"]+"</td>"
         table += "</tr>"
     table += "</table>"
     return table
