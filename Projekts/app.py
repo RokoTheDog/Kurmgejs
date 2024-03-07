@@ -3,9 +3,11 @@ import helpers
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def index():
-    return render_template("layout.html")
+    filter = request.args.get('filtertext', default="")
+    table = helpers.get_data_gov_lv()
+    return render_template("data.html", table=table)
 @app.route("/register")
 def register():
     return render_template("register.html")
@@ -15,8 +17,3 @@ def favourites():
 @app.route("/about")
 def aboutus():
     return render_template("about.html")
-@app.route("/data", methods=['GET'])
-def data():
-    filter = request.args.get('filtertext', default="")
-    table = helpers.get_data_gov_lv(filter)
-    return render_template("data.html", table=table)
