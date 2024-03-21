@@ -119,3 +119,9 @@ span{
 #register{
     left: 450px;
 }
+th, td {
+    border-bottom: 1px solid #ddd;
+  }
+a {
+    color:black;
+}
