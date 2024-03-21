@@ -14,15 +14,15 @@
                 <button type="button" class="toggle-button" onclick="login()">Log In</button>
                 <button type="button" class="toggle-button" onclick="register()">Register</button>
             </div>
-            <form id="login" class="input-gr">
-                <input type="text" class="input-fd" placeholder="Username" required>
-                <input type="text" class="input-fd" placeholder="Enter Password" required>
-                <input type="checkbox" class="check-box"><span>Remember Password</span>
+            <form id="login" class="input-gr" action="/login" method="POST">
+                <input type="text" class="input-fd" placeholder="Username" name="login_username" required>
+                <input type="text" class="input-fd" placeholder="Enter Password" name="login_password" required>
+                <input type="checkbox" class="check-box" name="remember_password"><span>Remember Password</span>
                 <button type="submit" class="submit-button">Log In</button>
             </form>
-            <form id="register" class="input-gr">
-                <input type="text" class="input-fd" placeholder="Username" required>
-                <input type="text" class="input-fd" placeholder="Enter Password" required>
+            <form id="register" class="input-gr" action="/register" method="POST">
+                <input type="text" class="input-fd" placeholder="Username" name="register_username" required>
+                <input type="text" class="input-fd" placeholder="Enter Password" name="register_password" required>
                 <input type="checkbox" class="check-box"><span>I agree to the terms and conditions</span>
                 <button type="submit" class="submit-button">Register</button>
             </form>
