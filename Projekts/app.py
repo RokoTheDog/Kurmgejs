@@ -1,64 +1,68 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 import helpers
 
 app = Flask(__name__)
-
-def create_connection():
-    conn = sqlite3.connect('users.db')  
-    return conn
-def create_user_table(conn):
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-def insert_user(conn, username, password):
-    cursor = conn.cursor()
-    cursor.execute('''
-        INSERT INTO users (username, password)
-        VALUES (?, ?)
-    ''', (username, password))
-    conn.commit()
-def retrieve_user(conn, username, password):
-    cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM users WHERE username=? AND password=?
-    ''', (username, password))
-    return cursor.fetchone()
+app.secret_key = 'your_secret_key'
 
 @app.route("/", methods=['GET'])
 def index():
-    filter = request.args.get('filtertext', default="")
-    table = helpers.get_data_gov_lv()
-    return render_template("data.html", table=table)
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['register_username']
-        password = request.form['register_password']
-        print("meginajums")
-        conn = create_connection()
-        create_user_table(conn)
-        insert_user(conn, username, password)
-        conn.close()
-        return redirect('/')
-@app.route("/login", methods=['POST'])
-def login():
-    username = request.form['login_username']
-    password = request.form['login_password']
-    conn = create_connection()
-    user = retrieve_user(conn, username, password)
-    conn.close()
-    if user:
-        return redirect('/')  
+    if 'username' in session:
+        filter = request.args.get('filtertext', default="")
+        table = helpers.get_data_gov_lv()
+        return render_template("data.html", table=table)
     else:
-        return redirect('/register') 
-        return render_template("register.html")
+        return redirect("/register")
+q1 = """
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            pass TEXT
+        );
+    """
+q2 = "INSERT INTO users (name, pass) VALUES (?, ?);"
+q3 = "SELECT * FROM users WHERE name=?"
+
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        conn = sqlite3.connect("login.db")
+        c = conn.cursor()
+        c.execute(q1)
+        c.execute(q2, (username, password) )
+        conn.commit()
+        conn.close()
+        session['username']= username
+        return redirect("/")
+    return render_template("register.html", user=session["username"])
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        conn = sqlite3.connect("login.db")
+        c = conn.cursor()
+        c.execute(q3, (username,))
+        rows = c.fetchall()
+        if len( rows ) > 0:
+            #print( rows[0][2] )
+            if password==rows[0][2]:
+                session['username'] = username
+                print("Login success")
+                return redirect("/")
+            else:
+                print("Password does not match")
+        else:
+            print("User does not exist")
+    return render_template("register.html", session=session)
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    return redirect("/register")
 @app.route("/favourites")
 def favourites():
     return render_template("favourites.html")

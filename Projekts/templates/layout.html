@@ -8,10 +8,12 @@
 </head>
 <body>
     <div class="bckgrnd"></div>
-        <div class="topnav">
-            <a href="/register">Login</a>
-        </div>
+    <div class="topnav2">
+        <a href="/">Home</a>
+        {% if 'username' in session %}
+        <span class="welcome-message2">Welcome, {{ session['username'] }}</span>
+        {% endif %}
     </div>
-    <h1>Sergejs</h1>{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </body>
 </html>
