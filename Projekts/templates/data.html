@@ -6,13 +6,22 @@
 
         <h2>Dinamiski iegūti dati no API</h2>
 
-        <form action="/data">
-                <input type="text" name="filtertext">
-                <input type="submit" value="Filtrēt">
-        </form>
-        <!-- tabula1 -->
-        {{ table | safe }}
-        <!-- tabula2 -->
+        <div class="flex-container">
+                <div class="filter-container">
+                        <div>
+                                <a>Vakances Nosaukums:</a>
+                                <form action="/data">
+                                        <input type="text" name="filtertext">
+                                        <input type="submit" value="Filtrēt">
+                                </form>
+                        </div>
+                </div>
+                <div class="table-container">
+                        {{ table | safe }}
+                </div>
+            </div>
+            
+            
 
         <a href="/">Uz galveno lapu</a>
 

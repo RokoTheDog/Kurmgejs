@@ -3,6 +3,20 @@
     padding: 0;
     font-family: sans-serif;
 }
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px
+}
+
+.left-container {
+    flex: 1;
+    margin-right: 10px; 
+}
+
+.right-container {
+    flex: 2; 
+}
 .bckgrnd {
     background-image: url('/static/photos/photo.webp');
     background-position: center;
