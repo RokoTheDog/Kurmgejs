@@ -8,12 +8,16 @@
 </head>
 <body>
     <div class="bckgrnd"></div>
-        <div class="topnav">
-            <a href="/register">Login</a>
-            <a href="/favourites">Saved</a>
-            <a href="/about">About us</a>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/about">About us</a>
+        <div class="dropdown">
+            <span class="welcome-message">Welcome, {{ session.get('username', '') }}</span>
+            <div class="dropdown-content">
+                <a href="/logout" id="logout-button">Logout</a> 
+            </div>
         </div>
     </div>
-    <h1>Sergejs</h1>{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </body>
 </html>

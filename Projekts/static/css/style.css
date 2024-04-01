@@ -65,27 +65,67 @@ input[type=text1]{
     background-position: center;
     background-size: cover;
     position: absolute;
-
 }
 .topnav {
     background-color: #333;
-    overflow: hidden;
     margin: 0;
     padding: 0;
+    display: flex; 
+    height: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-message {
+    color: #f2f2f2;
+    padding: 14px 16px;
+    font-size: 17px;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #333;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    padding-top: 14px;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #df1111;
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 .topnav a {
-    float: left;
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-    top: 0px;
 }
+
 .topnav a:hover {
     background-color: #ddd;
     color: black;
 }
+
 .topnav a.active {
     background-color: #04AA6D;
     color: white;
@@ -150,7 +190,19 @@ input[type=text1]{
     background: transparent;
 
 }
-.submit-button{
+.submit-button1{
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 70px;
+    background: linear-gradient(to right, #083be4, #06c4f3);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+}
+.submit-button2{
     width: 85%;
     padding: 10px 30px;
     cursor: pointer;
@@ -165,10 +217,9 @@ input[type=text1]{
     margin:30px 10px 30px 0;
 }
 span{
-    color: #777;
+    color: #04AA6D;
     font-size: 12px;
     bottom: 68px;
-    position: absolute;
 }
 #login{
     left: 50px;
@@ -179,6 +230,17 @@ span{
 th, td {
     border-bottom: 1px solid #ddd;
   }
+.about-background {
+    background-color: orange;
+}
+.center-content {
+    display: flex;
+    flex-direction: column; /* Add this line */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
 a {
     color:black;
 }
