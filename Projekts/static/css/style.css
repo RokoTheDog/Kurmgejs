@@ -133,7 +133,19 @@
     background: transparent;
 
 }
-.submit-button{
+.submit-button1{
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 70px;
+    background: linear-gradient(to right, #083be4, #06c4f3);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+}
+.submit-button2{
     width: 85%;
     padding: 10px 30px;
     cursor: pointer;

@@ -59,7 +59,6 @@ def login():
         if len( rows ) > 0:
             if password==rows[0][2]:
                 session['username'] = username
-                error = "Login success"
                 return redirect("/")
             else:
                 error = "Password does not match"

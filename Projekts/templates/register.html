@@ -20,8 +20,7 @@
                 {% if error %}
                     <p style="color: red;">{{ error }}</p>
                 {% endif %}
-                <input type="checkbox" class="check-box" name="remember_password"><span>Remember Password</span>
-                <button type="submit" class="submit-button">Log In</button>
+                <button type="submit" class="submit-button1">Log In</button>
             </form>
             <form id="register" class="input-gr" action="/register" method="POST">
                 <input type="text" class="input-fd" placeholder="Username" name="username" required>
@@ -30,7 +29,7 @@
                     <p id="registerError" style="color: red;">{{ error2 }}</p>
                 {% endif %}
                 <input type="checkbox" class="check-box" name="terms"><span>I agree to the terms and conditions</span>
-                <button type="submit" class="submit-button">Register</button>
+                <button type="submit" class="submit-button2">Register</button>
             </form>
         </div>
     </div>
