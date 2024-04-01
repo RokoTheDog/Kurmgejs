@@ -8,12 +8,28 @@
 
         <div class="flex-container">
                 <div class="filter-container">
-                        <div>
-                                <a>Vakances Nosaukums:</a>
-                                <form action="/data">
-                                        <input type="text" name="filtertext">
+                        <div class="wrapper">
+                                <a class="first">Vakances Nosaukums:</a>
+                                <form class="second" action="/" method="post">
+                                        <input type="text" name="nosaukums">
                                         <input type="submit" value="Filtrēt">
                                 </form>
+
+
+                        </div>
+                        <div class="wrapper">
+                                <a class="first">From</a>
+                                <form class="second" id="wage" action="/data">
+                                        <input type="text1" name="MinWage">
+
+                                </form>
+                                <b class="second">€</b>
+                                <a class="second"> to</a>
+                                <form class="second" id="wage" action="/data">
+                                        <input type="text1" name="MaxWage">
+
+                                </form>
+                                <b class="second">€</b>
                         </div>
                 </div>
                 <div class="table-container">

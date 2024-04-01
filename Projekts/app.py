@@ -4,15 +4,18 @@ import helpers
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET'])
 
+@app.route("/", methods=['GET', 'POST'])
 def index():
-
-    filter = request.args.get('filtertext', default="")
-
-    table = helpers.get_data_gov_lv()
+    if request.method == 'POST':
+        nosaukums = request.form.get('nosaukums')
+    else:
+        nosaukums = None
+    
+    table = helpers.get_data_gov_lv(nosaukums)
 
     return render_template("data.html", table=table)
+
 
 @app.route("/register")
 
