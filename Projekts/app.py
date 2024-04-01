@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 import sqlite3
 import helpers
 
@@ -26,6 +26,9 @@ q3 = "SELECT * FROM users WHERE name=?"
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
+    if request.method == "GET":
+        if request.referrer:
+            session["next"] = request.referrer
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -43,11 +46,14 @@ def register():
         conn.commit()
         conn.close()
         session['username']= username
-        return redirect("/")
+        return redirect(session.get('next', '/'))
     return render_template("register.html", user=session.get("username", None), error2=None)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    if request.method == "GET":
+        if request.referrer:
+            session["next"] = request.referrer
     error = None
     if request.method == "POST":
         username = request.form.get("username")
@@ -59,7 +65,7 @@ def login():
         if len( rows ) > 0:
             if password==rows[0][2]:
                 session['username'] = username
-                return redirect("/")
+                return redirect(session.get('next', '/'))
             else:
                 error = "Password does not match"
         else:
@@ -68,12 +74,16 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop('username', None)
+    session.pop('next', None)
     return redirect("/register")
 @app.route("/favourites")
 def favourites():
     return render_template("favourites.html")
-@app.route("/about")
-def aboutus():
-    return render_template("about.html")
+@app.route('/about')
+def about():
+    if 'username' not in session:
+        return redirect(url_for('register'))
+    else:
+        return render_template('about.html')
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
