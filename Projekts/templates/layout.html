@@ -10,9 +10,12 @@
     <div class="bckgrnd"></div>
     <div class="topnav">
         <a href="/">Home</a>
-        {% if 'username' in session %}
-        <span class="welcome-message2">Welcome, {{ session['username'] }}</span>
-        {% endif %}
+        <div class="dropdown">
+            <span class="welcome-message">Welcome, {{ session.get('username', '') }}</span>
+            <div class="dropdown-content">
+                <a href="/logout" id="logout-button">Logout</a> 
+            </div>
+        </div>
     </div>
     {% block body %}{% endblock %}
 </body>

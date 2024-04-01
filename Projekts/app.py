@@ -29,19 +29,26 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        terms_accepted = request.form.get("terms") == "on"
+        if not terms_accepted:
+            return render_template("register.html", user=session.get("username", None), error2="You must accept the terms and conditions to register")
         conn = sqlite3.connect("login.db")
         c = conn.cursor()
         c.execute(q1)
+        c.execute(q3, (username,))
+        user_exists = c.fetchone()
+        if user_exists:
+            return render_template("register.html", user=session.get("username", None), error2="Username already exists")
         c.execute(q2, (username, password) )
         conn.commit()
         conn.close()
         session['username']= username
         return redirect("/")
-    user = session.get("username", None)
-    return render_template("register.html", user=user)
+    return render_template("register.html", user=session.get("username", None), error2=None)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    error = None
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -50,16 +57,15 @@ def login():
         c.execute(q3, (username,))
         rows = c.fetchall()
         if len( rows ) > 0:
-            #print( rows[0][2] )
             if password==rows[0][2]:
                 session['username'] = username
-                print("Login success")
+                error = "Login success"
                 return redirect("/")
             else:
-                print("Password does not match")
+                error = "Password does not match"
         else:
-            print("User does not exist")
-    return render_template("register.html", session=session)
+            error = "User does not exist"
+    return render_template("register.html", session=session, error=error)
 @app.route("/logout")
 def logout():
     session.pop('username', None)
