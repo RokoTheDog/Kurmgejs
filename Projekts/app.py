@@ -8,15 +8,12 @@ app.secret_key = 'your_secret_key'
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    nosaukums = request.form.get('nosaukums') if request.method == 'POST' else None
-    MinWage = request.form.get('MinWage') if request.method == 'POST' else None
-    MaxWage = request.form.get('MaxWage') if request.method == 'POST' else None  # fixed typo here
-    Location = request.form.get('Location') if request.method == 'POST' else None
-    table = helpers.get_data_gov_lv(nosaukums, MinWage, MaxWage, Location)
-    return render_template("data.html", table=table)
     if 'username' in session:
-        filter = request.args.get('filtertext', default="")
-        table = helpers.get_data_gov_lv()
+        nosaukums = request.form.get('nosaukums') if request.method == 'POST' else None
+        MinWage = request.form.get('MinWage') if request.method == 'POST' else None
+        MaxWage = request.form.get('MaxWage') if request.method == 'POST' else None  # fixed typo here
+        Location = request.form.get('Location') if request.method == 'POST' else None
+        table = helpers.get_data_gov_lv(nosaukums, MinWage, MaxWage, Location)
         return render_template("data.html", table=table)
     else:
         return redirect("/register")

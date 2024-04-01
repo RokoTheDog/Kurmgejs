@@ -9,7 +9,7 @@ def get_data_gov_lv(nosaukums=None,MinWage=None,MaxWage=None,Location=None):
     query = start_url
     conditions = []
     if nosaukums:
-        conditions.append(f' "Vakances nosaukums" LIKE \'{nosaukums}%\'')
+        conditions.append(f' "Vakances nosaukums" LIKE \'%{nosaukums}%\'')
     if MinWage:
         conditions.append(f' "Alga no" >= {MinWage}')
     if MaxWage:
