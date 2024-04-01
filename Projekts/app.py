@@ -10,9 +10,23 @@ def index():
     if request.method == 'POST':
         nosaukums = request.form.get('nosaukums')
     else:
+        MinWage = None
+    if request.method == 'POST':
+        MinWage = request.form.get('MinWage')
+    else:
         nosaukums = None
+    if request.method == 'POST':
+        MaxWage = request.form.get('MaxVage')
+    else:
+        MaxWage = None
+    if request.method == 'POST':
+        Location = request.form.get('Location')
+    else:
+        Location = None
     
-    table = helpers.get_data_gov_lv(nosaukums)
+    
+    
+    table = helpers.get_data_gov_lv(nosaukums,MinWage,MaxWage,Location)
 
     return render_template("data.html", table=table)
 

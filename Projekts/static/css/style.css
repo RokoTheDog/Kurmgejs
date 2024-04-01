@@ -3,8 +3,28 @@
     padding: 0;
     font-family: sans-serif;
 }
-.table-container{
-    width:1800px;
+th.column1 { width: 100px; }
+th.column2 { width: 150px; }
+th.column3 { width: 120px; }
+th.column4 { width: 120px; }
+th.column5 { width: 200px; }
+th.column6 { width: 100px; }
+th.column7 { width: 150px; }
+
+/* Apply column widths to table data */
+td.column1 { width: 100px; }
+td.column2 { width: 150px; }
+td.column3 { width: 120px; }
+td.column4 { width: 120px; }
+td.column5 { width: 200px; }
+td.column6 { width: 100px; }
+td.column7 { width: 150px; }
+
+/* Optional CSS for better styling */
+th, td {
+    border: 1px solid #ddd; /* Add border for clarity */
+    padding: 8px; /* Add padding for spacing */
+    text-align: left; /* Align text to the left */
 }
 .flex-container {
     display: flex;

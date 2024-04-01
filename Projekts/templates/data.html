@@ -19,21 +19,38 @@
                         </div>
                         <div class="wrapper">
                                 <a class="first">From</a>
-                                <form class="second" id="wage" action="/data">
+                                <form class="second" action="/" method="post">
                                         <input type="text1" name="MinWage">
 
                                 </form>
                                 <b class="second">€</b>
                                 <a class="second"> to</a>
-                                <form class="second" id="wage" action="/data">
+                                <form class="second" action="/" method="post">
                                         <input type="text1" name="MaxWage">
 
                                 </form>
                                 <b class="second">€</b>
                         </div>
+                        <div class="wrapper">
+                                <a class="first">Location:</a>
+                                <form class="second" action="/" method="post">
+                                        <input type="text1" name="Location">
+                                </form>
+                        </div>
                 </div>
                 <div class="table-container">
-                        {{ table | safe }}
+                        <table>
+                                <tr>
+                                        <th class="column1">ID</th>
+                                        <th class="column2">Vakances Nosaukums</th>
+                                        <th class="column3">Alga no</th>
+                                        <th class="column4">Alga līdz</th>
+                                        <th class="column5">Pieteikšanās Termiņš</th>
+                                        <th class="column6">Vieta</th>
+                                        <th class="column7">Vairāk Informācijas</th>
+                                    </tr>
+                                {{ table | safe }}
+                        </table>
                 </div>
             </div>
             
