@@ -27,8 +27,7 @@ q3 = "SELECT * FROM users WHERE name=?"
 @app.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "GET":
-        if request.referrer:
-            session["next"] = request.referrer
+        session["next"] = request.args.get("next")
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -51,10 +50,9 @@ def register():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method == "GET":
-        if request.referrer:
-            session["next"] = request.referrer
     error = None
+    if request.method == "GET":
+        session["next"] = request.args.get("next")
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -75,14 +73,14 @@ def login():
 def logout():
     session.pop('username', None)
     session.pop('next', None)
-    return redirect("/register")
+    return redirect(url_for('register', next='/'))
 @app.route("/favourites")
 def favourites():
     return render_template("favourites.html")
 @app.route('/about')
 def about():
     if 'username' not in session:
-        return redirect(url_for('register'))
+        return redirect(url_for('login', next=request.url))
     else:
         return render_template('about.html')
 if __name__ == '__main__':
