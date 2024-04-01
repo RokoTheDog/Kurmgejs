@@ -37,7 +37,8 @@ def register():
         conn.close()
         session['username']= username
         return redirect("/")
-    return render_template("register.html", user=session["username"])
+    user = session.get("username", None)
+    return render_template("register.html", user=user)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -70,4 +71,4 @@ def favourites():
 def aboutus():
     return render_template("about.html")
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8000)
