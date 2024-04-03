@@ -95,7 +95,7 @@ def register():
         hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
         terms_accepted = request.form.get("terms") == "on"
         if not terms_accepted:
-            return render_template("register.html", user=session.get("username", None), error2="You must accept the terms and conditions to register")
+            return render_template("register.html", user=session.get("username", None), error2="You must accept the terms and conditions in order to register")
         conn = sqlite3.connect("login.db")
         c = conn.cursor()
         c.execute(q1)
@@ -104,8 +104,8 @@ def register():
         if user_exists:
             return render_template("register.html", user=session.get("username", None), error2="Username already exists")
         c.execute(q2, (username, hashed_password))
-        user_id = c.lastrowid  # Get the id of the newly created user
-        c.execute(q4)  # Create the filters table if it doesn't exist
+        user_id = c.lastrowid  
+        c.execute(q4)  
         c.execute("INSERT INTO filters (user_id) VALUES (?);", (user_id,))
         conn.commit()
         conn.close()
