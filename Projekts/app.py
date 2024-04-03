@@ -9,12 +9,26 @@ app.secret_key = 'your_secret_key'
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if 'username' in session:
-        nosaukums = request.form.get('nosaukums') if request.method == 'POST' else None
-        MinWage = request.form.get('MinWage') if request.method == 'POST' else None
-        MaxWage = request.form.get('MaxWage') if request.method == 'POST' else None  # fixed typo here
-        Location = request.form.get('Location') if request.method == 'POST' else None
+        conn = sqlite3.connect("login.db")
+        c = conn.cursor()
+        if request.method == 'POST':
+            nosaukums = request.form.get('nosaukums')
+            MinWage = request.form.get('MinWage')
+            MaxWage = request.form.get('MaxWage')
+            Location = request.form.get('Location')
+            c.execute("UPDATE filters SET nosaukums = ?, MinWage = ?, MaxWage = ?, Location = ? WHERE user_id = (SELECT id FROM users WHERE name = ?);", (nosaukums, MinWage, MaxWage, Location, session['username']))
+        elif request.method == 'GET':
+            c.execute("SELECT nosaukums, MinWage, MaxWage, Location FROM filters WHERE user_id = (SELECT id FROM users WHERE name = ?);", (session['username'],))
+            row = c.fetchone()
+            if row:
+                nosaukums, MinWage, MaxWage, Location = row
+            else:
+                nosaukums = MinWage = MaxWage = Location = None
+        conn.commit()
+        conn.close()
         table = helpers.get_data_gov_lv(nosaukums, MinWage, MaxWage, Location)
-        return render_template("data.html", table=table)
+        return render_template("data.html", table=table, nosaukums=nosaukums, MinWage=MinWage, MaxWage=MaxWage, Location=Location)
+
     else:
         return redirect("/register")
 q1 = """
@@ -26,11 +40,24 @@ q1 = """
     """
 q2 = "INSERT INTO users (name, pass) VALUES (?, ?);"
 q3 = "SELECT * FROM users WHERE name=?"
+q4 = """
+    CREATE TABLE IF NOT EXISTS filters (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        nosaukums TEXT,
+        MinWage INTEGER,
+        MaxWage INTEGER,
+        Location TEXT,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    );
+"""
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "GET":
-        session["next"] = request.args.get("next")
+        next_url = request.args.get("next")
+        if next_url is not None:
+            session["next"] = next_url
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -44,7 +71,10 @@ def register():
         user_exists = c.fetchone()
         if user_exists:
             return render_template("register.html", user=session.get("username", None), error2="Username already exists")
-        c.execute(q2, (username, password) )
+        c.execute(q2, (username, password))
+        user_id = c.lastrowid  # Get the id of the newly created user
+        c.execute(q4)  # Create the filters table if it doesn't exist
+        c.execute("INSERT INTO filters (user_id) VALUES (?);", (user_id,))
         conn.commit()
         conn.close()
         session['username']= username
@@ -54,7 +84,9 @@ def register():
 def login():
     error = None
     if request.method == "GET":
-        session["next"] = request.args.get("next")
+        next_url = request.args.get("next")
+        if next_url is not None:
+            session["next"] = next_url
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
