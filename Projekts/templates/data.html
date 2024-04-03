@@ -10,32 +10,36 @@
                 <div class="filter-container">
                         <form action="/" method="post">
                         <div class="wrapper">
-                                <a class="first">Vakances Nosaukums:</a>
                                 <div class="second">
-                                <input type="text" name="nosaukums" value="{{ nosaukums }}">
-                                <input type="submit" value="Filtrēt">
+                                        <a class="first">Profesija:</a>
+                                        <input type="text1" name="nosaukums" value="{{ nosaukums }}">
+                                        <input type="submit" value="Filtrēt">
                                 </div>
                         </div>
                         <div class="wrapper">
-                                <a class="first">Alga no</a>
                                 <div class="second">
-                                <input type="text1" name="MinWage" value="{{ MinWage }}">
-                                <b>€</b>
-                                <a>Līdz </a>
-                                <input type="text1" name="MaxWage" value="{{ MaxWage }}">
-                                <b>€</b>
+                                        <div class="wage-filter">
+                                                <a class="first">Alga no</a>
+                                                <b>€</b>
+                                                <input type="text1" name="MinWage" value="{{ MinWage }}">
+                                        </div>
+                                        <div class="wage-filter">
+                                                <a>Līdz </a>
+                                                <b>€</b>
+                                                <input type="text1" name="MaxWage" value="{{ MaxWage }}">
+                                        </div>
                                 </div>
                         </div>
                         <div class="wrapper">
-                                <a class="first">Lokācija:</a>
                                 <div class="second">
-                                <input type="text1" name="Location" value="{{ Location }}">
-                                <input type="submit" name="clear" value="Notīrīt filtru">
+                                        <a class="first">Lokācija:</a>
+                                        <input type="text1" name="Location" value="{{ Location }}">
+                                        <input type="submit" name="clear" value="Notīrīt filtru">
                                 </div>
                         </div>
                         </form>
                 </div>
-                </div>
+        </div>
                 <div class="right-container">
                         <div class="table-container">
                                 <table>

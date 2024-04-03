@@ -11,7 +11,7 @@ th.column5 { width: 200px; }
 th.column6 { width: 100px; }
 th.column7 { width: 150px; }
 
-/* Apply column widths to table data */
+
 td.column1 { width: 100px; }
 td.column2 { width: 150px; }
 td.column3 { width: 120px; }
@@ -20,15 +20,13 @@ td.column5 { width: 200px; }
 td.column6 { width: 100px; }
 td.column7 { width: 150px; }
 
-/* Optional CSS for better styling */
 th, td {
-    border: 1px solid #ddd; /* Add border for clarity */
-    padding: 8px; /* Add padding for spacing */
-    text-align: left; /* Align text to the left */
+    border: 1px solid #ddd; 
+    padding: 8px; 
+    text-align: left; 
 }
 .flex-container {
     display: flex;
-    justify-content: space-between;
     padding: 0 20px
 }
 
@@ -40,21 +38,41 @@ th, td {
 .right-container {
     flex: 2; 
 }
+.filter-container {
+    margin-top: 100px;
+}
 .wrapper {
     width: 400px;
-    border: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     overflow: hidden;
 }
+.wrapper:first-child {
+    border-top: 1px solid black;
+}
+.wrapper:last-child {
+    border-bottom: 1px solid black;
+}
 .first {
-    /*width: 300px;*/
     float:left;
-    /*border: 1px solid red;*/
 }
 .second {
-    /*border: 1px solid green;*/
     float: left;
+    margin-right: 20px; 
+    margin-left: 20px; 
 }
-input[type=text1]{
+.second:first-child {
+    margin-top: 20px;
+}
+.second:last-child {
+    margin-bottom: 20px;
+}
+.wage-filter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+input[type=text]{
     width:100%;
 }
 #wage{
@@ -235,7 +253,7 @@ th, td {
 }
 .center-content {
     display: flex;
-    flex-direction: column; /* Add this line */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -243,6 +261,9 @@ th, td {
 }
 a {
     color:black;
+}
+a.first {
+    white-space: nowrap;
 }
 b{
     color:black;
