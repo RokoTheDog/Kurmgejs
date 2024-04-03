@@ -1,11 +1,34 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, g 
 import sqlite3
 import helpers
+import bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-
+@app.before_request
+def before_request():
+    if 'db_setup' not in g:
+        g.db_setup = True
+        with sqlite3.connect("login.db") as conn:
+            c = conn.cursor()
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    pass TEXT
+                );
+            """)
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS filters (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER,
+                    nosaukums TEXT,
+                    MinWage TEXT,
+                    MaxWage TEXT,
+                    Location TEXT
+                );
+            """)
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if 'username' in session:
@@ -28,6 +51,10 @@ def index():
                 nosaukums, MinWage, MaxWage, Location = row
             else:
                 nosaukums = MinWage = MaxWage = Location = ''
+            nosaukums = '' if nosaukums is None else nosaukums
+            MinWage = '' if MinWage is None else MinWage
+            MaxWage = '' if MaxWage is None else MaxWage
+            Location = '' if Location is None else Location
         conn.commit()
         conn.close()
         table = helpers.get_data_gov_lv(nosaukums, MinWage, MaxWage, Location)
@@ -64,7 +91,8 @@ def register():
             session["next"] = next_url
     if request.method == "POST":
         username = request.form.get("username")
-        password = request.form.get("password")
+        password = request.form.get("password").encode('utf-8')
+        hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
         terms_accepted = request.form.get("terms") == "on"
         if not terms_accepted:
             return render_template("register.html", user=session.get("username", None), error2="You must accept the terms and conditions to register")
@@ -75,7 +103,7 @@ def register():
         user_exists = c.fetchone()
         if user_exists:
             return render_template("register.html", user=session.get("username", None), error2="Username already exists")
-        c.execute(q2, (username, password))
+        c.execute(q2, (username, hashed_password))
         user_id = c.lastrowid  # Get the id of the newly created user
         c.execute(q4)  # Create the filters table if it doesn't exist
         c.execute("INSERT INTO filters (user_id) VALUES (?);", (user_id,))
@@ -93,13 +121,14 @@ def login():
             session["next"] = next_url
     if request.method == "POST":
         username = request.form.get("username")
-        password = request.form.get("password")
+        password = request.form.get("password").encode('utf-8')
         conn = sqlite3.connect("login.db")
         c = conn.cursor()
         c.execute(q3, (username,))
         rows = c.fetchall()
         if len( rows ) > 0:
-            if password==rows[0][2]:
+            hashed_password_from_db=rows[0][2]
+            if bcrypt.checkpw(password, hashed_password_from_db):
                 session['username'] = username
                 return redirect(session.get('next', '/'))
             else:
