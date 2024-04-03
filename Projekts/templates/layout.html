@@ -9,12 +9,12 @@
 <body>
     <div class="bckgrnd"></div>
     <div class="topnav">
-        <a href="/">Home</a>
-        <a href="/about">About us</a>
+        <a href="/">Galvenā lapa</a>
+        <a href="/about">Par mums</a>
         <div class="dropdown">
-            <span class="welcome-message">Welcome, {{ session.get('username', '') }}</span>
+            <span class="welcome-message">{{ session.get('username', '') }}</span>
             <div class="dropdown-content">
-                <a href="/logout" id="logout-button">Logout</a> 
+                <a href="/logout" id="logout-button">Izrakstīties</a> 
             </div>
         </div>
     </div>

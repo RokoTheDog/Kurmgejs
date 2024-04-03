@@ -12,18 +12,22 @@ def index():
         conn = sqlite3.connect("login.db")
         c = conn.cursor()
         if request.method == 'POST':
-            nosaukums = request.form.get('nosaukums')
-            MinWage = request.form.get('MinWage')
-            MaxWage = request.form.get('MaxWage')
-            Location = request.form.get('Location')
-            c.execute("UPDATE filters SET nosaukums = ?, MinWage = ?, MaxWage = ?, Location = ? WHERE user_id = (SELECT id FROM users WHERE name = ?);", (nosaukums, MinWage, MaxWage, Location, session['username']))
+            if 'clear' in request.form:
+                nosaukums = MinWage = MaxWage = Location = ''
+                c.execute("UPDATE filters SET nosaukums = ?, MinWage = ?, MaxWage = ?, Location = ? WHERE user_id = (SELECT id FROM users WHERE name = ?);", (nosaukums, MinWage, MaxWage, Location, session['username']))
+            else:
+                nosaukums = request.form.get('nosaukums')
+                MinWage = request.form.get('MinWage')
+                MaxWage = request.form.get('MaxWage')
+                Location = request.form.get('Location')
+                c.execute("UPDATE filters SET nosaukums = ?, MinWage = ?, MaxWage = ?, Location = ? WHERE user_id = (SELECT id FROM users WHERE name = ?);", (nosaukums, MinWage, MaxWage, Location, session['username']))
         elif request.method == 'GET':
             c.execute("SELECT nosaukums, MinWage, MaxWage, Location FROM filters WHERE user_id = (SELECT id FROM users WHERE name = ?);", (session['username'],))
             row = c.fetchone()
             if row:
                 nosaukums, MinWage, MaxWage, Location = row
             else:
-                nosaukums = MinWage = MaxWage = Location = None
+                nosaukums = MinWage = MaxWage = Location = ''
         conn.commit()
         conn.close()
         table = helpers.get_data_gov_lv(nosaukums, MinWage, MaxWage, Location)
