@@ -12,7 +12,7 @@
         <a href="/">Galvenā lapa</a>
         <a href="/about">Par mums</a>
         <div class="dropdown">
-            <span class="welcome-message">{{ session.get('username', '') }}</span>
+            <span class="welcome-message">Labdien, {{ session.get('username', '') }}</span>
             <div class="dropdown-content">
                 <a href="/logout" id="logout-button">Izrakstīties</a> 
             </div>
