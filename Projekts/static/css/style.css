@@ -3,27 +3,10 @@
     padding: 0;
     font-family: sans-serif;
 }
-th.column1 { width: 100px; }
-th.column2 { width: 150px; }
-th.column3 { width: 120px; }
-th.column4 { width: 120px; }
-th.column5 { width: 200px; }
-th.column6 { width: 100px; }
-th.column7 { width: 150px; }
-
-
-td.column1 { width: 100px; }
-td.column2 { width: 150px; }
-td.column3 { width: 120px; }
-td.column4 { width: 120px; }
-td.column5 { width: 200px; }
-td.column6 { width: 100px; }
-td.column7 { width: 150px; }
-
 th, td {
     border: 1px solid #ddd; 
     padding: 8px; 
-    text-align: left; 
+    text-align: center; 
 }
 .flex-container {
     display: flex;
@@ -31,40 +14,48 @@ th, td {
 }
 
 .left-container {
-    flex: 1;
+    flex: 0.5;
     margin-right: 10px; 
+    width: 25%;
 }
 
 .right-container {
-    flex: 2; 
+    flex: 3; 
 }
 .filter-container {
-    margin-top: 100px;
+    margin-top: 50px;
 }
 .wrapper {
-    width: 400px;
+    width: 300px;
     border-left: 1px solid black;
     border-right: 1px solid black;
     overflow: hidden;
+    margin: 0; 
+    padding: 0;
 }
 .wrapper:first-child {
     border-top: 1px solid black;
 }
 .wrapper:last-child {
-    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 0px solid black;
+    border-right: 0px solid black;
 }
 .first {
     float:left;
 }
 .second {
-    float: left;
+    margin-top: 20px;
     margin-right: 20px; 
     margin-left: 20px; 
 }
-.second:first-child {
-    margin-top: 20px;
+.third {
+    margin-right: 20px; 
+    margin-left: 20px; 
 }
-.second:last-child {
+.fourth {
+    margin-right: 20px; 
+    margin-left: 20px; 
     margin-bottom: 20px;
 }
 .wage-filter {
@@ -72,17 +63,14 @@ th, td {
     align-items: center;
     gap: 5px;
 }
+.wage-filter a {
+    white-space: nowrap;
+}
 input[type=text]{
     width:100%;
 }
 #wage{
     width:10%;
-}
-.bckgrnd {
-    background-image: url('/static/photos/photo.webp');
-    background-position: center;
-    background-size: cover;
-    position: absolute;
 }
 .topnav {
     background-color: #333;
@@ -96,8 +84,9 @@ input[type=text]{
 
 .welcome-message {
     color: #f2f2f2;
-    padding: 14px 16px;
+    padding: 20px 16px;
     font-size: 17px;
+    margin-right: 10px;
 }
 .dropdown {
     position: relative;
@@ -269,4 +258,13 @@ b{
     color:black;
     padding-left:5px;
     padding-right:5px;
+}.right-align {
+    margin-left: auto;
+}
+.button-container {
+    display: flex;
+}
+
+.right-align {
+    margin-left: auto;
 }

@@ -25,15 +25,25 @@ def get_data_gov_lv(nosaukums=None,MinWage=None,MaxWage=None,Location=None):
 
 
     records = data['result']['records']
-    #print(records)
-    table = "<table><tr><th>ID</th><th>Vakances Nosaukums</th><th>Alga no</th><th>Alga līdz</th><th>Pieteikšanās Termiņš</th><th>Vieta</th><th>Vairāk Informācijas</th></tr>"
+    table = """
+<table style="table-layout: fixed; width: 100%;">
+<tr>
+    <th style="width: 3%;">ID</th>
+    <th style="width: 30%;">Vakances Nosaukums</th>
+    <th style="width: 8%;">Alga no</th>
+    <th style="width: 8%;">Alga līdz</th>
+    <th style="width: 20%;">Pieteikšanās Termiņš</th>
+    <th style="width: 21%;">Vieta</th>
+    <th style="width: 10%;">Vairāk Info</th>
+</tr>
+"""
     for row in records:
         #print(row)Fprint
         table += "<tr>"
         table += "<td>"+str(row["_id"])+"</td>"
         table += "<td>"+row["Vakances nosaukums"]+"</td>"
-        table += "<td>"+str(row["Alga no"])+"</td>"
-        table += "<td>"+str(row["Alga līdz"])+"</td>"
+        table += "<td>"+format(float(row["Alga no"]), '.2f')+"</td>"
+        table += "<td>"+format(float(row["Alga līdz"]), '.2f')+"</td>"
         table += "<td>"+row["Pieteikšanās termiņš"]+"</td>"
         table += "<td>"+row["Vieta"]+"</td>"
         table += "<td><a href="+row["Vakances paplašināts apraksts"]+">More info</td>"

@@ -9,34 +9,38 @@
         <div class="left-container">
                 <div class="filter-container">
                         <form action="/" method="post">
-                        <div class="wrapper">
-                                <div class="second">
-                                        <a class="first">Profesija:</a>
-                                        <input type="text1" name="nosaukums" value="{{ nosaukums }}">
-                                        <input type="submit" value="Filtrēt">
-                                </div>
-                        </div>
-                        <div class="wrapper">
-                                <div class="second">
-                                        <div class="wage-filter">
-                                                <a class="first">Alga no</a>
-                                                <b>€</b>
-                                                <input type="text1" name="MinWage" value="{{ MinWage }}">
-                                        </div>
-                                        <div class="wage-filter">
-                                                <a>Līdz </a>
-                                                <b>€</b>
-                                                <input type="text1" name="MaxWage" value="{{ MaxWage }}">
+                                <div class="wrapper">
+                                        <div class="second wage-filter">
+                                                <a class="first">Profesija:</a>
+                                                <input type="text1" name="nosaukums" class="right-align" value="{{ nosaukums }}">
                                         </div>
                                 </div>
-                        </div>
-                        <div class="wrapper">
-                                <div class="second">
-                                        <a class="first">Lokācija:</a>
-                                        <input type="text1" name="Location" value="{{ Location }}">
+                                <div class="wrapper">
+                                        <div class="third">
+                                                <div class="wage-filter">
+                                                        <a class="first">Alga no</a>
+                                                        <b>€</b>
+                                                        <input type="text1" class="right-align" name="MinWage" value="{{ MinWage }}">
+                                                </div>
+                                                <div class="wage-filter">
+                                                        <a>Līdz </a>
+                                                        <b>€</b>
+                                                        <input type="text1" class="right-align" name="MaxWage" value="{{ MaxWage }}">
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="wrapper">
+                                        <div class="fourth wage-filter">
+                                                <a class="first">Lokācija:</a>
+                                                <input type="text1" class="right-align" name="Location" value="{{ Location }}">
+                                        </div>
+                                </div>
+                                <div class="wrapper button-container">
                                         <input type="submit" name="clear" value="Notīrīt filtru">
+                                        <div class="right-align">
+                                                <input type="submit" value="Filtrēt">
+                                        </div>
                                 </div>
-                        </div>
                         </form>
                 </div>
         </div>
