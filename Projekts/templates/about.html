@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block title %}
+About Us
+{% endblock %}
+
+{% block body %}
+<div class="about-background center-content">
+    <div class="aboutus">
+        <p>Mēs esam divi skolnieki, kas mācās Rīgas Valsts 1. ģimnāzijā. Šī vietne tika izveidota programmēšanas stundu ietvaros, tiek izmantoti, javascript, python, sqlite3, html un css elementi. Mēs esam pateicīgi par jebkādu atsauksmi, kas varētu palīdzēt mums uzlabot šo vietni.</p>
+        <p>Lai sazinātos ar mums, lūdzu, izmantojiet kādu no šiem e-pastiem: <a href="mailto:mmesenvalds@edu.riga.lv">mmesenvalds@edu.riga.lv</a>, <a href="mailto:rabele@edu.riga.lv">rabele@edu.riga.lv</a></p>
+        <p>vai tālruņiem: <a href="tel:+37120203407">+37120203407</a>, <a href="tel:+37126699629">+37126699629</a></p>
+    </div>
+</div>
+{% endblock %}
