@@ -147,10 +147,6 @@ def logout():
     session.pop('username', None)
     session.pop('next', None)
     return redirect(url_for('register', next='/'))
-@app.route("/favourites")
-def favourites():
-    return render_template("favourites.html")
-
 @app.route('/about')
 def about():
     if 'username' not in session:

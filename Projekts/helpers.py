@@ -46,7 +46,7 @@ def get_data_gov_lv(nosaukums=None,MinWage=None,MaxWage=None,Location=None):
         table += "<td>"+format(float(row["Alga līdz"]), '.2f')+"</td>"
         table += "<td>"+row["Pieteikšanās termiņš"]+"</td>"
         table += "<td>"+row["Vieta"]+"</td>"
-        table += "<td><a href="+row["Vakances paplašināts apraksts"]+">More info</td>"
+        table += "<td><a href="+row["Vakances paplašināts apraksts"]+" target='_blank'>More info</td>"
         table += "</tr>"
     table += "</table>"
     return table
