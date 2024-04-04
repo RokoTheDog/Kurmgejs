@@ -240,6 +240,12 @@ th, td {
 .about-background {
     background-color: orange;
 }
+.about-background2 {
+    background-color: gainsboro;
+}
+.about-background3{
+    background-color: white;
+}
 .center-content {
     display: flex;
     flex-direction: column; 
@@ -267,4 +273,7 @@ b{
 
 .right-align {
     margin-left: auto;
+}
+.aboutus{
+    padding: 400px;
 }

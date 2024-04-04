@@ -91,26 +91,32 @@ def register():
             session["next"] = next_url
     if request.method == "POST":
         username = request.form.get("username")
+        password2 = request.form.get("password")
         password = request.form.get("password").encode('utf-8')
-        hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
-        terms_accepted = request.form.get("terms") == "on"
-        if not terms_accepted:
-            return render_template("register.html", user=session.get("username", None), error2="You must accept the terms and conditions in order to register")
-        conn = sqlite3.connect("login.db")
-        c = conn.cursor()
-        c.execute(q1)
-        c.execute(q3, (username,))
-        user_exists = c.fetchone()
-        if user_exists:
-            return render_template("register.html", user=session.get("username", None), error2="Username already exists")
-        c.execute(q2, (username, hashed_password))
-        user_id = c.lastrowid  
-        c.execute(q4)  
-        c.execute("INSERT INTO filters (user_id) VALUES (?);", (user_id,))
-        conn.commit()
-        conn.close()
-        session['username']= username
-        return redirect(session.get('next', '/'))
+        if len(username) <= 12 and len(password2) >= 8:
+            hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
+            terms_accepted = request.form.get("terms") == "on"
+            if not terms_accepted:
+                return render_template("register.html", user=session.get("username", None), error2="Lai reģistrētos, jums ir jāpiekrīt noteikumiem un nosacījumiem")
+            conn = sqlite3.connect("login.db")
+            c = conn.cursor()
+            c.execute(q1)
+            c.execute(q3, (username,))
+            user_exists = c.fetchone()
+            if user_exists:
+                return render_template("register.html", user=session.get("username", None), error2="Lietotājvārds jau ir aizņemts")
+            c.execute(q2, (username, hashed_password))
+            user_id = c.lastrowid  
+            c.execute(q4)  
+            c.execute("INSERT INTO filters (user_id) VALUES (?);", (user_id,))
+            conn.commit()
+            conn.close()
+            session['username']= username
+            return redirect(session.get('next', '/'))
+        elif len(password2) < 8:
+            return render_template("register.html", user=session.get("username", None), error2="Parolei ir jābūt vismaz 8 zīmēm garai")
+        else:
+            return render_template("register.html", user=session.get("username", None), error2="Lietotājvārdam ir jābūt mazākam par 13 zīmēm")
     return render_template("register.html", user=session.get("username", None), error2=None)
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -132,9 +138,9 @@ def login():
                 session['username'] = username
                 return redirect(session.get('next', '/'))
             else:
-                error = "Password does not match"
+                error = "Parole nesakrīt"
         else:
-            error = "User does not exist"
+            error = "Lietotājs neeksistē"
     return render_template("register.html", session=session, error=error)
 @app.route("/logout")
 def logout():
