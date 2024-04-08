@@ -93,6 +93,8 @@ def register():
         username = request.form.get("username")
         password2 = request.form.get("password")
         password = request.form.get("password").encode('utf-8')
+        if " " in username or " " in password2:
+            return render_template("register.html", user=session.get("username", None), error2="Username and password cannot contain spaces")
         if len(username) <= 12 and len(password2) >= 8:
             hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
             terms_accepted = request.form.get("terms") == "on"
